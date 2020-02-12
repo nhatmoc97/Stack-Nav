@@ -8,7 +8,9 @@ import {
 } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Colors from '../constants/Colors';
+import { useDispatch } from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
+import { setFilters } from '../store/actions/meals'
 const FilterSwitch = props => {
   return (
     <View style={styles.filterContainer}>
@@ -26,38 +28,40 @@ const FiltersScreen = props => {
   const [isLactoseFree, setIsLactoseFree] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
+  const dispatch = useDispatch();
   const saveFilters = useCallback(() => {
     const appliedFilters = {
       glutenFree: isGlutenFree,
       lactoseFree: isLactoseFree,
       vegan: isVegan,
-      isVegetarian: isVegetarian
+      vegetarian: isVegetarian
     };
-    console.log(appliedFilters);
-  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
+    dispatch(setFilters(appliedFilters));
+
+  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch]);
   useEffect(() => {
     navigation.setParams({ save: saveFilters });
   }, [saveFilters]);
   return (
     <View style={styles.screen}>
-      <Text style={styles.title}>Available Filters / Restrictions</Text>
+      <Text style={styles.title}>Bộ lọc / Hạn chế</Text>
       <FilterSwitch
-        label='Gluten-free'
+        label='Không chứa tinh bột'
         state={isGlutenFree}
         onChange={newValue => setIsGlutenFree(newValue)}
       />
       <FilterSwitch
-        label='Lactose-free'
+        label='Không chứa đường, sữa'
         state={isLactoseFree}
         onChange={newValue => setIsLactoseFree(newValue)}
       />
       <FilterSwitch
-        label='Vegan'
+        label='Món chay'
         state={isVegan}
         onChange={newValue => setIsVegan(newValue)}
       />
       <FilterSwitch
-        label='Vegetarian'
+        label='Dành cho người ăn chay'
         state={isVegetarian}
         onChange={newValue => setIsVegetarian(newValue)}
       />
@@ -67,7 +71,7 @@ const FiltersScreen = props => {
 
 FiltersScreen.navigationOptions = navData => {
   return {
-    headerTitle: 'Filter Meals',
+    headerTitle: 'Lọc món ăn',
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item

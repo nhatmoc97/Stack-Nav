@@ -58,7 +58,7 @@ const tabScreenConfig = {
                 );
             },
             tabBarColor: Colors.primaryColor,
-            tabBarLabel: Platform.OS === 'android' ? < Text style={{ fontFamily: 'open-sans-bold' }}> Meals</Text > : 'Meals'
+            tabBarLabel: Platform.OS === 'android' ? < Text style={{ fontFamily: 'open-sans-bold' }}> Món ăn</Text > : 'Món ăn'
         }
     },
     Favorites: {
@@ -69,7 +69,7 @@ const tabScreenConfig = {
                 return (<Ionicons name='ios-star' size={25} color={tabInfo.tintColor} />);
             },
             tabBarColor: Colors.accentColor,
-            tabBarLabel: Platform.OS === 'android' ? < Text style={{ fontFamily: 'open-sans-bold' }}> Favorites</Text > : 'Favorites'
+            tabBarLabel: Platform.OS === 'android' ? < Text style={{ fontFamily: 'open-sans-bold' }}> Ưa thích</Text > : 'Ưa thích'
         }
     }
 };
@@ -94,13 +94,15 @@ const FiltersNavigator = createStackNavigator({
     Filters: FiltersScreen
 },
     {
-
+        navigationOptions: {
+            drawerLabel: 'Bộ lọc'
+        },
         defaultNavigationOptions: defaultStackNavOptions
     });
 const MainNavigator = createDrawerNavigator({
     MealsFavs: {
         screen: MealsFavTabNavigator, navigationOptions: {
-            drawerLabel: 'Meals'
+            drawerLabel: 'Món ăn'
         }
     },
     Filters: FiltersNavigator
